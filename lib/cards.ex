@@ -18,4 +18,8 @@ defmodule Cards do
     Enum.member?(deck, card)
   end
 
+  def deal(deck, hand_size) do
+    {hand, rest} = Enum.split(deck, hand_size)
+    hand
+  end
 end
