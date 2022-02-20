@@ -1,7 +1,13 @@
 defmodule Cards do
+  @moduledoc """
+    Provides methods for creating and handling a deck of cards
+  """
 
+  @doc """
+    Returns a lista of strings representing a deck of playing cards
+  """
   def create_deck do
-    values = ["Ace", "Two", "Three", "Four", "Five"]
+    values = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nive", "Ten", "Jack", "Queen", "King"]
     suits = ["Spades", "Clubs", "Hearts", "Diamonds"]
 
     for suit <- suits, value <- values do
@@ -10,17 +16,41 @@ defmodule Cards do
 
   end
 
+  @doc """
+    Returns a new list sourced from the shuffle `deck`
+  """
   def shuffle deck do
     Enum.shuffle deck
   end
 
+  @doc """
+    Determines whether a `deck` contains a given `card`.
+
+  ## Examples
+
+      iex> deck = Cards.create_deck
+      iex> Cards.contains?(deck, "Ace of Spades")
+      true
+
+  """
   def contains? deck, card do
     Enum.member? deck, card
   end
 
+  @doc """
+    Divides a deck into a hand the remainder of the deck.
+    The `hand_size` argument indicates how many cards should be in the hand.
+  ## Examples
+
+      iex> deck = Cards.create_deck
+      iex> {hand, _rest} = Cards.deal(deck, 1)
+      iex> hand
+      ["Ace of Spades"]
+
+  """
   def deal deck, hand_size do
-    {hand, _rest} = Enum.split deck, hand_size
-    hand
+    {hand, rest} = Enum.split deck, hand_size
+    {hand, rest}
   end
 
   def save deck, filename do
@@ -36,6 +66,8 @@ defmodule Cards do
   end
 
   def create_hand hand_size do
-    Cards.create_deck |> Cards.shuffle |> Cards.deal(hand_size)
+    Cards.create_deck
+    |> Cards.shuffle
+    |> Cards.deal(hand_size)
   end
 end
